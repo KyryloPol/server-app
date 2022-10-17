@@ -7,7 +7,7 @@ Fitness-land je prémiový fitness klub s dlouhou historií, a to je důvod, pro
 Klient si bude moci přidávat nové tréninky a trenér přidávat nové hodiny. Ke každému treningu si bude moci zapisovat místnost provedení cvíku. 
 
 ## Datový model serverové části 
-<img src="diagram.png" style="background-color: white"/> 
+<img src="diagram_1_.png" style="background-color: white"/> 
 Takto vypadá datový model naší databáze.
 
 ## Komplexní dotaz 
