@@ -1,4 +1,4 @@
-package com.trainme.treainmeapp.web;
+package com.trainme.treainmeapp;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import com.trainme.treainmeapp.web.TrainingController;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;

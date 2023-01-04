@@ -1,4 +1,4 @@
-package com.trainme.treainmeapp.web;
+package com.trainme.treainmeapp;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.doNothing;
@@ -15,6 +15,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import com.trainme.treainmeapp.web.TrainerController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

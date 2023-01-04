@@ -1,4 +1,4 @@
-package com.trainme.treainmeapp.services;
+package com.trainme.treainmeapp;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
+import com.trainme.treainmeapp.services.CustomUserDetailsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

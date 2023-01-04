@@ -1,4 +1,4 @@
-package com.trainme.treainmeapp.web;
+package com.trainme.treainmeapp;
 
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
@@ -8,6 +8,7 @@ import com.trainme.treainmeapp.services.ImageUploadService;
 
 import java.security.Principal;
 
+import com.trainme.treainmeapp.web.ImageUploadController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

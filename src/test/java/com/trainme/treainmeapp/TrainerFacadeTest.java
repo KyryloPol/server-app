@@ -1,4 +1,4 @@
-package com.trainme.treainmeapp.facade;
+package com.trainme.treainmeapp;
 
 import static org.junit.Assert.assertEquals;
 
@@ -8,6 +8,7 @@ import com.trainme.treainmeapp.dto.TrainerDTO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import com.trainme.treainmeapp.facade.TrainerFacade;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

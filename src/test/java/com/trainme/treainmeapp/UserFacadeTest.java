@@ -1,4 +1,4 @@
-package com.trainme.treainmeapp.facade;
+package com.trainme.treainmeapp;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -20,6 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.trainme.treainmeapp.facade.UserFacade;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.trainme.treainmeapp.services;
+package com.trainme.treainmeapp;
 
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThrows;
@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Optional;
 
+import com.trainme.treainmeapp.services.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
