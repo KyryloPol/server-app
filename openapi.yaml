@@ -1,0 +1,1160 @@
+openapi: 3.0.1
+info:
+  title: TrainMe API
+  version: v0.0.1
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+
+paths:
+  /api/user/:
+    get:
+      security:
+        - Token: []
+      tags:
+        - User API
+      operationId: getCurrentUser
+      responses:
+        "200":
+          description: Get current logged user information
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+    put:
+      security:
+        - Token: []
+      tags:
+        - User API
+      operationId: updateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserDTO"
+        required: true
+      responses:
+        "200":
+          description: Change current logged user information
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+  /api/training/{trainingId}:
+    get:
+      security:
+        - Token: []
+      tags:
+        - Training API
+      operationId: getTrainingByIdAndUser
+      parameters:
+        - name: trainingId
+          in: path
+          required: true
+          description: Numeric id of the training to get
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Get specific training by id for logged user
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/TrainingDTO"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+    put:
+      security:
+        - Token: []
+      tags:
+        - Training API
+      operationId: updateTraining
+      parameters:
+        - name: trainingId
+          in: path
+          required: true
+          description: Numeric id of the training to update
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrainingForUserDTO"
+        required: true
+      responses:
+        "200":
+          description: Update specific training by id for logged user
+          content:
+            "application/json":
+              schema:
+                type: object
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+        "417":
+          description: "Expectation error: invalid timestamp for training"
+    delete:
+      security:
+        - Token: []
+      tags:
+        - Training API
+      operationId: deleteTraining
+      parameters:
+        - name: trainingId
+          in: path
+          required: true
+          description: Numeric id of the training to delete
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Delete specific training by id for logged user
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+
+  /api/training/review:
+    post:
+      security:
+        - Token: []
+      tags:
+        - Training API
+      operationId: setReviewValueFromTraining
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewValueForTrainer'
+        required: true
+      responses:
+        "200":
+          description: Set review value after training with specific trainer
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+
+  /api/trainer/{trainerId}:
+    get:
+      security:
+        - Token: []
+      tags:
+        - Trainer API
+      operationId: getTrainer
+      parameters:
+        - name: trainerId
+          in: path
+          required: true
+          description: Numeric id of the trainer to get
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Get information about trainer by id
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/TrainerDTO"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+    put:
+      security:
+        - Token: []
+      tags:
+        - Trainer API
+      operationId: updateTrainer
+      parameters:
+        - name: trainerId
+          in: path
+          required: true
+          description: Numeric id of the trainer to update
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrainerDTO"
+        required: true
+      responses:
+        "200":
+          description: Update information about trainer by id (only for admins)
+          content:
+            "application/json":
+              schema:
+                type: object
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "403":
+          description: "Forbidden response for no-admin user"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+    delete:
+      security:
+        - Token: []
+      tags:
+        - Trainer API
+      operationId: deleteTrainer
+      parameters:
+        - name: trainerId
+          in: path
+          required: true
+          description: Numeric id of the trainer to delete
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Delete trainer by id
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+  /api/training/:
+    get:
+      security:
+        - Token: []
+      tags:
+        - Training API
+      operationId: getAllTrainingsForUser
+      parameters:
+        - name: order
+          in: query
+          required: false
+          allowReserved: true
+          schema:
+            type: string
+            example: "desc"
+          allowEmptyValue: true
+          description: Order trainings by time from nearest to futherest with "desc" and from futherest to nearest with "asc", by defalut query have "desc" value
+      responses:
+        "200":
+          description: Get all training for current logged user
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TrainingForUserDTO"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "417":
+          description: "Error of query resquest (not \"desc\" or \"asc\")"
+    post:
+      security:
+        - Token: []
+      tags:
+        - Training API
+      operationId: createTraining
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrainingRequest"
+        required: true
+      responses:
+        "200":
+          description: Create training for current logged user
+          content:
+            "application/json":
+              schema:
+                type: object
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+        "417":
+          description: "Expectation error: invalid timestamp for training"
+  /api/trainer/:
+    post:
+      security:
+        - Token: []
+      tags:
+        - Trainer API
+      operationId: createTrainer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TrainerDTO"
+        required: true
+      responses:
+        "200":
+          description: Create new trainer (only for admins)
+          content:
+            "application/json":
+              schema:
+                type: object
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "403":
+          description: "Forbidden response for no-admin user"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+  /api/image/{trainerId}:
+    get:
+      security:
+        - Token: []
+      tags:
+        - Image API
+      operationId: getImageToTrainer
+      parameters:
+        - name: trainerId
+          in: path
+          required: true
+          description: Numeric id of the trainer to get his/her image
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Get media image for trainer
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/ImageModel"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+    post:
+      security:
+        - Token: []
+      tags:
+        - Image API
+      operationId: uploadImageToTrainer
+      parameters:
+        - name: trainerId
+          in: path
+          required: true
+          description: Numeric id of the trainer to upload his/her image
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: Upload new image for trainer (only for admins)
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "403":
+          description: "Forbidden response for no-admin user"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+  /api/auth/signup:
+    post:
+      tags:
+        - Authentication API
+      operationId: registerUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignUpRequest"
+        required: true
+      responses:
+        "200":
+          description: Create new tokenized user
+          content:
+            "application/json":
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "User registered successfully!"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+  /api/auth/signin:
+    post:
+      tags:
+        - Authentication API
+      operationId: authenticateUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+        required: true
+      responses:
+        "200":
+          description: Log-in tokenized user in system
+          content:
+            "application/json":
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  token:
+                    type: string
+                    example: "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWQiOiIxIiwiZW1haWwiOiJ0ZXN0QG1haWwuaW8iLCJ1c2VybmFtZSI6InRlc3RAbWFpbC5pbyIsImlhdCI6MTY3Mjg1MjA3NCwiZXhwIjoxNjcyODUyNjc0fQ.vgUmBYb6TNAEERiN1isOmB2XMt-P54zuoGlvDEY5J5UwlMv55a7vAvurj5yGPVh1NEsV8YrzT3pORodyhNG8sw"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+  /api/user/{userId}:
+    get:
+      security:
+        - Token: []
+      tags:
+        - User API
+      operationId: getUserProfile
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: Numeric id of the user to get
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Get user profile by id (only for admins)
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/UserDTO"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "403":
+          description: "Forbidden response for no-admin user"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+  /api/training/trainer/{trainerId}:
+    get:
+      security:
+        - Token: []
+      tags:
+        - Training API
+      operationId: getAllTrainingForTrainer
+      parameters:
+        - name: trainerId
+          in: path
+          required: true
+          description: Numeric id of the trainer to get his/her trainings
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Get all training for trainer by trainer id (only for admins)
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TrainingForTrainerDTO"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "403":
+          description: "Forbidden response for no-admin user"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+  /api/training/nearest:
+    get:
+      security:
+        - Token: []
+      tags:
+        - Training API
+      operationId: getNearestTrainingForUser
+      responses:
+        "200":
+          description: Get nearesrt training for current logged user
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/TrainingForUserDTO"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+  /api/trainer/theBest:
+    get:
+      security:
+        - Token: []
+      tags:
+        - Trainer API
+      operationId: getTheBest
+      responses:
+        "200":
+          description: Get the best trainer in the club
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/TrainerDTO"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+  /api/trainer/byValue/{valueId}:
+    get:
+      security:
+        - Token: []
+      tags:
+        - Trainer API
+      operationId: getByValue
+      parameters:
+        - name: valueId
+          in: path
+          required: true
+          description: Numeric id of the review value to get all trainer with this value
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Get all trainers with same review value
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TrainerDTO"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+  /api/trainer/all:
+    get:
+      security:
+        - Token: []
+      tags:
+        - Trainer API
+      operationId: getAll
+      responses:
+        "200":
+          description: Get all trainers
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TrainerDTO"
+        "401":
+          description: "Error: unauthorized"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/Unauthorized"
+        "500":
+          description: "Internal server error, when error on server side"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/InternalServerError"
+        "400":
+          description: "Bad request error"
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/BadRequestError"
+components:
+  securitySchemes:
+    Token:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    UserDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        username:
+          type: string
+          example: "testusername"
+        dateOfBirthday:
+          type: string
+          format: date
+          example: "2022-12-12"
+        membershipFrom:
+          type: string
+          format: date
+          example: "2022-12-12"
+        membershipTo:
+          type: string
+          format: date
+          example: "2022-12-12"
+        memberships:
+          uniqueItems: true
+          type: array
+          items:
+            type: string
+            enum:
+              - ROLE_STANDARD
+              - ROLE_ADMIN
+    TrainingForUserDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        place:
+          type: string
+          example: "Room 404"
+        timeTo:
+          type: string
+          format: date-time
+          example: "2022-12-12T12:00:00"
+        timeFrom:
+          type: string
+          format: date-time
+          example: "2022-12-12T13:00:00"
+        trainerUsername:
+          type: string
+          example: "trainerusername"
+    TrainerDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 2
+        username:
+          type: string
+          example: "trainerusername"
+        reviewValue:
+          type: integer
+          format: int64
+          example: 5
+        email:
+          type: string
+          example: "test.test@mail.io"
+        telephone:
+          type: string
+          example: "+420773551028"
+        priceForOneTraining:
+          type: string
+          example: "100$"
+        priceForMonthTraining:
+          type: string
+          example: "1000$"
+        dateOfBirthday:
+          type: string
+          format: date
+          example: "2002-11-19"
+    TrainingRequest:
+      required:
+        - place
+        - trainerId
+      type: object
+      properties:
+        trainerId:
+          type: integer
+          format: int64
+          example: 10
+        place:
+          type: string
+          example: "Room 404"
+        timeFrom:
+          type: string
+          format: date-time
+          example: "2022-12-12T12:00:00"
+        timeTo:
+          type: string
+          format: date-time
+          example: "2022-12-12T13:00:00"
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "successfully"
+    SignUpRequest:
+      required:
+        - email
+        - password
+        - username
+      type: object
+      properties:
+        email:
+          type: string
+          example: "test.test@mail.io"
+        username:
+          type: string
+          example: "testusername"
+        password:
+          maxLength: 2147483647
+          minLength: 6
+          type: string
+          example: "test123456"
+        confirmPassword:
+          type: string
+          example: "test123456"
+    LoginRequest:
+      required:
+        - password
+        - username
+      type: object
+      properties:
+        username:
+          type: string
+          example: "testusername"
+        password:
+          type: string
+          example: "test123456"
+    ReviewValueForTrainer:
+      required:
+        - reviewValue
+        - trainerUsername
+        - trainingId
+      type: object
+      properties:
+        trainingId:
+          type: integer
+          format: int64
+          example: 10
+        trainerUsername:
+          type: string
+          example: "TrainerUsername"
+        reviewValue:
+          type: integer
+          format: int64
+          example: 7
+    TrainingDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        place:
+          type: string
+          example: "Room 404"
+        timeTo:
+          type: string
+          format: date-time
+          example: "2022-12-12T13:00:00"
+        timeFrom:
+          type: string
+          format: date-time
+          example: "2022-12-12T12:00:00"
+    TrainingForTrainerDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        place:
+          type: string
+          example: "Room 404"
+        timeTo:
+          type: string
+          format: date-time
+          example: "2022-12-12T13:00:00"
+        timeFrom:
+          type: string
+          format: date-time
+          example: "2022-12-12T12:00:00"
+        userUsername:
+          type: string
+          example: "testusername"
+    ImageModel:
+      type: object
+      properties:
+        uri:
+          type: string
+          example: "photo.jpeg"
+        imageBytes:
+          type: array
+          items:
+            type: string
+            format: byte
+          example: ["AAAAAAA"]
+        trainerId:
+          type: integer
+          format: int64
+          example: 10
+    Unauthorized:
+      type: object
+      properties:
+        username:
+          type: string
+          example: "Invalid Username"
+        password:
+          type: string
+          example: "Invalid Password"
+    InternalServerError:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          example: "2023-01-04T16:46:17.825+00:00"
+        status:
+          type: integer
+          format: int64
+          example: 500
+        error:
+          type: string
+          example: "Internal Server Error"
+        path:
+          type: string
+          example: "error path"
+    BadRequestError:
+      type: object
+      properties:
+        timestamp:
+          type: string
+          format: date-time
+          example: "2023-01-04T16:46:17.825+00:00"
+        status:
+          type: integer
+          format: int64
+          example: 400
+        error:
+          type: string
+          example: "Bad Request"
+        exception:
+          type: string
+          example: "exception method on server"
+        message:
+          type: string
+          example: "error message"
+        path:
+          type: string
+          example: "error path"
