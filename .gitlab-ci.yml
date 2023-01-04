@@ -18,7 +18,7 @@ test:
   image: markhobson/maven-chrome:jdk-18
   script:
     - *setup-mvn
-    - ./mvnw -Dtest=AuthControllerTest,ImageUploadControllerTest,TrainerControllerTest,TrainingControllerTest,UserControllerTest,CustomUserDetailsServiceTest,ImageUploadServiceTest,TrainerServiceTest,TrainingServiceTest,UserServiceTest,TrainerFacadeTest,TrainingFacadeTest,UserFacadeTest test
+    - ./mvnw test
   artifacts:
     name: "Surefire test reports from $CI_PROJECT_NAME on $CI_COMMIT_REF_SLUG"
     expire_in: 1 day
