@@ -5,6 +5,7 @@ import com.trainme.treainmeapp.dto.TrainingDTO;
 import com.trainme.treainmeapp.dto.TrainingForTrainerDTO;
 import com.trainme.treainmeapp.dto.TrainingForUserDTO;
 import com.trainme.treainmeapp.facade.TrainingFacade;
+import com.trainme.treainmeapp.payload.request.ReviewValueForTrainer;
 import com.trainme.treainmeapp.payload.request.TrainingRequest;
 import com.trainme.treainmeapp.payload.response.MessageResponse;
 import com.trainme.treainmeapp.services.TrainingService;
@@ -158,4 +159,16 @@ public class TrainingController {
         return new ResponseEntity<>(trainingDTOList, HttpStatus.OK);
     }
 
+    /**
+     * This function is used to update the review value of a training
+     *
+     * @param reviewValueForTrainer This is the object that contains the review value and the training id.
+     * @param principal The principal object is used to get the currently logged-in user.
+     * @return Message response
+     */
+    @PostMapping("/review")
+    public ResponseEntity<Object> setReviewValueFromTraining(@Valid @RequestBody ReviewValueForTrainer reviewValueForTrainer, Principal principal){
+        trainingService.updateReviewByTraining(reviewValueForTrainer, principal);
+        return new ResponseEntity<>(new MessageResponse("Value successfully uploaded"), HttpStatus.OK);
+    }
 }

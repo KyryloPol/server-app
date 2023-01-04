@@ -11,6 +11,7 @@ import com.trainme.treainmeapp.exceptions.IdenticalTrainingExists;
 import com.trainme.treainmeapp.exceptions.NotAllowedException;
 import com.trainme.treainmeapp.exceptions.TrainerNotFoundException;
 import com.trainme.treainmeapp.exceptions.TrainingNotFoundException;
+import com.trainme.treainmeapp.payload.request.ReviewValueForTrainer;
 import com.trainme.treainmeapp.payload.request.TrainingRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -151,8 +152,23 @@ public class TrainingService {
      */
     public void deleteTraining(Long trainingId, Principal principal){
         Training training = trainingRepository.findByIdAndUserId(trainingId,getUserByPrincipal(principal).getId())
-                .orElseThrow(()->new TrainingNotFoundException("Training not found"));;
+                .orElseThrow(()->new TrainingNotFoundException("Training not found"));
         trainingRepository.delete(training);
+    }
+
+    /**
+     * > This function updates the review value of a trainer by a user review on a training
+     *
+     * @param reviewValueForTrainer the object that contains the trainingId and the reviewValue
+     * @param principal the user who is logged in
+     */
+    public void updateReviewByTraining(ReviewValueForTrainer reviewValueForTrainer, Principal principal){
+        Training training = trainingRepository.findByIdAndUserId(reviewValueForTrainer.getTrainingId(), getUserByPrincipal(principal).getId())
+                .orElseThrow(()->new TrainingNotFoundException("Training not found"));
+        Trainer trainer = training.getTrainer();
+        trainer.setReviewValue((long)Math.floor((reviewValueForTrainer.getReviewValue() + trainer.getReviewValue()) / 2));
+        trainerRepository.save(trainer);
+        LOG.info("Value {} was added to trainer: {}", trainer.getUsername(), reviewValueForTrainer.getReviewValue());
     }
 
     /**
