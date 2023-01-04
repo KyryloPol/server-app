@@ -13,7 +13,7 @@ Takto vypadá datový model naší databáze.
 ## Komplexní dotaz 
 Komplexní dotaz by samozřejmě mohlo vypadat takto: Kdo bude nejlepším trenérem měsíce podle ohodnocení provedených tréninků a kdo může požadovat zvýšení platu.
 
-## Instalování
+## Instalování klienta
 Nejprve pro spuštění klienta musíte nainstalovat npm a Node.js a poté naklonovat repositář [https://gitlab.fit.cvut.cz/poliskyr/bi-tjv-semesterwork-client](https://gitlab.fit.cvut.cz/poliskyr/bi-tjv-semesterwork-client).  
 Chcete-li nainstalovat npm (správce balíčků uzlů), budete muset mít Node.js nainstalován na vašem systému.  npm je součástí uzlu.js, takže pokud ji máte nainstalovanou,měli byste již mít nainstalovanou npm.
 
@@ -43,3 +43,24 @@ Poté jak jste naklonovali úložiště a nainstalovali npm:
 - npm i (v hlavním adresáři)
 - npm run start (v hlavním adresáři)
 
+## Instalování serveru
+- Stáhněte si z artefaktů úspěšného běhu pipeline zkompilovaný projekt.
+- Artefakt rozbalíme. Předpokládám, že jste ho uložili do 
+- ```$HOME/Downloads. cd ~/Downloads; unzip Maven_artifacts_from*.zip```
+- Ted' můžete aplikaci spustit ```java -jar treain-me-app-0.0.1-SNAPSHOT.jar```
+
+## Instalování databáze
+Nejprve instalujte MySQL Community Server from [https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-fresh-install](https://dev.mysql.com/doc/mysql-apt-repo-quick-guide/en/#apt-repo-fresh-install)
+<br></br>
+Nainstalujte MySQL Workbench from [https://dev.mysql.com/downloads/workbench/](https://dev.mysql.com/downloads/workbench/)
+<br></br>
+Vytvořte nové připojení on MySQL Workbench:
+- Pojmenujte toto připojení, jak chcete, např: ```trainme-app```
+- Nechte Hostname a port bez změny
+- Username: ```root```
+- Password: ```blank``` (nechte prazdné pole)
+
+
+Poté jak máte vše nainstalováno importujte databáze z adresářu ```assets/``` do MySQL Workbench (```trainme.sql``` - zde existují testovácí data, ```trainme.sql``` - zde není žádná data, pouze struktura).
+<br></br>
+Tím padem mužete spustit aplikaci a bude automatické nastavené přípojení 
