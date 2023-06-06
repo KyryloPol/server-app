@@ -24,7 +24,7 @@ public class SecurityConstants {
     public static final String CONTENT_TYPE = "application/json";
 
     // Log out time expiration, automatic log out, 10 min
-    public static final long EXPIRATION_TIME = 600_000;
+    public static final long EXPIRATION_TIME = 600_000_000_000L;
 
 }
 
